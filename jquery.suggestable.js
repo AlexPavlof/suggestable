@@ -4,10 +4,11 @@
  * Usage:
  *     $('selector').suggestable({
  *         'data-url'        : 'object\'s data-property which contains url to suggests',
- *         'container-class' : 'css class name for drop-down div',
+ *         'container-class' : 'css class name for drop-down ul',
  *         'item-class'      : 'css class name for each suggest item',
  *         'term-class'      : 'css class name for term part of each suggest item',
- *         'suggest-class'   : 'css class name for suggest part of each suggest item'
+ *         'suggest-class'   : 'css class name for suggest part of each suggest item',
+ *         'term-min-length' : 'minimum length required to trigger request'
  *     });
  */
 (function ($) {
@@ -23,7 +24,8 @@
                     'container-class' : 'suggestable-container',
                     'item-class'      : 'suggestable-item',
                     'term-class'      : 'suggestable-term',
-                    'suggest-class'   : 'suggestable-suggest'
+                    'suggest-class'   : 'suggestable-suggest',
+                    'term-min-length' : 3
                 }, parameters),
                 url        = self.data(options['data-url']),
                 term       = self.val(),
@@ -35,7 +37,7 @@
                         $matches    = $(selector);
 
                     if ($matches.size() < 1) {
-                        return $('div', {
+                        return $('ul', {
                             'class' : options['container-class'],
                             'id'    : containerId
                         }).insertAfter(self);
@@ -44,8 +46,9 @@
                     return $matches.first();
                 }()),
                 successCb  = function (items) {
-                    var i     = 0,
-                        $item = $('div', {
+                    var
+                        i     = 0,
+                        $item = $('li', {
                             'class' : options['item-class']
                         }).on('click', function () {
                             self.val($(this).data('suggest'));
@@ -72,7 +75,7 @@
                     }
                 };
 
-            if (term.length >= 3) {
+            if (term.length >= options['term-min-length']) {
                 if (!cache.hasOwnProperty(url + ':' + term)) {
                     $.get(
                         url,
