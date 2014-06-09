@@ -58,7 +58,7 @@
                         for (i = 0; i < items.length; i++) {
                             $item.empty();
 
-                            // Делим строку на два span'а, чтобы сделать дизайн.
+                            // Divide string into two spans for design.
                             $item.append($('span', {
                                 'class' : options['term-class']
                             }).text(term)).append($('span', {
