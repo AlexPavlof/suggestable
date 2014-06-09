@@ -73,18 +73,18 @@
                 };
 
             if (term.length >= 3) {
-                if (!cache.hasOwnProperty(term)) {
+                if (!cache.hasOwnProperty(url + ':' + term)) {
                     $.get(
                         url,
                         {term : term},
                         function (data) {
-                            cache[term] = data;
-                            successCb(cache[term]);
+                            cache[url + ':' + term] = data;
+                            successCb(cache[url + ':' + term]);
                         },
                         'json'
                     );
                 } else {
-                    successCb(cache[term]);
+                    successCb(cache[url + ':' + term]);
                 }
             }
         });
