@@ -104,8 +104,8 @@
                     break;
 
                 case KEY_UP:
-                    if (hoverIndex === -1 || hoverIndex <= $(itemSelector).first().data('suggest-index')) {
-                        hoverIndex = $(itemSelector).last().data('suggest-index');
+                    if (hoverIndex === -1 || hoverIndex <= $(itemSelector, $container).first().data('suggest-index')) {
+                        hoverIndex = $(itemSelector, $container).last().data('suggest-index');
                     } else {
                         hoverIndex = $container.find('[data-suggest-index=' + (hoverIndex - 1) + ']').data('suggest-index');
                     }
@@ -114,8 +114,8 @@
                     break;
 
                 case KEY_DOWN:
-                    if (hoverIndex === -1 || hoverIndex >= $(itemSelector).last().data('suggest-index')) {
-                        hoverIndex = $(itemSelector).first().data('suggest-index');
+                    if (hoverIndex === -1 || hoverIndex >= $(itemSelector, $container).last().data('suggest-index')) {
+                        hoverIndex = $(itemSelector, $container).first().data('suggest-index');
                     } else {
                         hoverIndex = $container.find('[data-suggest-index=' + (hoverIndex + 1) + ']').data('suggest-index');
                     }
