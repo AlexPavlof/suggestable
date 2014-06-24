@@ -18,9 +18,9 @@ $('selector').suggestable({
 
 #### Provides events
 ```
-$(document).trigger('suggestable-show', [$container]):     // Suggestable container is shown
-$(document).trigger('suggestable-hide', [$container]):     // Suggestable container is hidden
-$(document).trigger('suggestable-click', [$container]):    // Suggestable item is clicked
-$(document).trigger('suggestable-item-select', [$item]):   // Suggestable item is selected
-$(document).trigger('suggestable-item-unselect', [$item]): // Suggestable item is unselected
+$(document).trigger('suggestable-show', [$container]);     // Suggestable container is shown
+$(document).trigger('suggestable-hide', [$container]);     // Suggestable container is hidden
+$(document).trigger('suggestable-click', [$container]);    // Suggestable item is clicked
+$(document).trigger('suggestable-item-select', [$item]);   // Suggestable item is selected
+$(document).trigger('suggestable-item-unselect', [$item]); // Suggestable item is unselected
 ```
