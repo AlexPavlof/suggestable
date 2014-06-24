@@ -7,9 +7,9 @@ Simple jQuery plugin implementing search suggests with local cache.
 ```
 $('selector').suggestable({
     'data-url'          : 'object\'s data-property which contains url to suggests',
-    'container-class'   : 'css class name for drop-down ul',
-    'item-class'        : 'css class name for each suggest item',
-    'item-active-class' : 'css class name for active suggest item',
+    'container-class'   : 'css class name for drop-down <ul>',
+    'item-class'        : 'css class name for each suggest <li> item',
+    'item-active-class' : 'css class name for active suggest <li> item',
     'term-class'        : 'css class name for term part of each suggest item',
     'suggest-class'     : 'css class name for suggest part of each suggest item',
     'term-min-length'   : 'minimum length required to trigger request'
