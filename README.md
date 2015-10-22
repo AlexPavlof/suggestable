@@ -12,6 +12,9 @@ $('selector').suggestable({
     'item-active-class' : 'css class name for active suggest <li> item',
     'term-class'        : 'css class name for term part of each suggest item',
     'suggest-class'     : 'css class name for suggest part of each suggest item',
+    'delimiter-text'    : 'text for delimiter between term and text parts',
+    'delimiter-class'   : 'css class name for delimiter between term and text parts',
+    'text-class'        : 'css class name for text part of each suggest item',
     'term-min-length'   : 'minimum length required to trigger request'
 });
 ```

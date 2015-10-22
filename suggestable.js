@@ -9,6 +9,9 @@
  *         'item-active-class' : 'css class name for active suggest item',
  *         'term-class'        : 'css class name for term part of each suggest item',
  *         'suggest-class'     : 'css class name for suggest part of each suggest item',
+ *         'delimiter-text'    : 'text for delimiter between term and text parts',
+ *         'delimiter-class'   : 'css class name for delimiter between term and text parts',
+ *         'text-class'        : 'css class name for text part of each suggest item',
  *         'term-min-length'   : 'minimum length required to trigger request'
  *     });
  *
@@ -39,6 +42,9 @@
                 'item-active-class' : 'suggestable-item-active',
                 'term-class'        : 'suggestable-term',
                 'suggest-class'     : 'suggestable-suggest',
+                'delimiter-text'    : ' — ',
+                'delimiter-class'   : 'suggestable-delimiter',
+                'text-class'        : 'suggestable-text',
                 'term-min-length'   : 3
             }, parameters),
             itemSelector = '.' + options['item-class'],
@@ -94,7 +100,8 @@
             var
                 keyCode    = (event.keyCode || event.which),
                 $self      = $(this),
-                $container = getContainer($self);
+                $container = getContainer($self),
+                $suggestion;
 
             // Handle ENTER key press on text field
             if ($container.is(':visible')) {
@@ -110,7 +117,9 @@
                         hoverIndex = $container.find('[data-suggest-index=' + (hoverIndex - 1) + ']').data('suggest-index');
                     }
 
-                    $container.find('[data-suggest-index=' + hoverIndex + ']').trigger('mouseover');
+                    $suggestion = $container.find('[data-suggest-index=' + hoverIndex + ']');
+                    $suggestion.trigger('mouseover');
+                    $self.val($suggestion.data('suggest-data'));
                     break;
 
                 case KEY_DOWN:
@@ -120,7 +129,9 @@
                         hoverIndex = $container.find('[data-suggest-index=' + (hoverIndex + 1) + ']').data('suggest-index');
                     }
 
-                    $container.find('[data-suggest-index=' + hoverIndex + ']').trigger('mouseover');
+                    $suggestion = $container.find('[data-suggest-index=' + hoverIndex + ']');
+                    $suggestion.trigger('mouseover');
+                    $self.val($suggestion.data('suggest-data'));
                     break;
                 }
 
@@ -164,9 +175,18 @@
                                 'class' : options['term-class']
                             }).text(term)).append($('<span/>', {
                                 'class' : options['suggest-class']
-                            }).text(items[i].substr(term.length)))
-                                .attr('data-suggest-data', items[i])
-                                .attr('data-suggest-index', i);
+                            }).text(items[i]['query'].substr(term.length)))
+                                .attr('data-suggest-data', items[i].query)
+                                .attr('data-suggest-index', i)
+                                .attr('data-suggest-url', items[i]['suggest-url']);
+
+                            if (items[i]['suggest-text'] !== '') {
+                                $item.append($('<span/>', {
+                                    'class': options['delimiter-class']
+                                }).text(options['delimiter-text'])).append($('<span/>', {
+                                    'class': options['text-class']
+                                }).text(items[i]['suggest-text']));
+                            }
 
                             $container.append($item.show().clone());
                         }
@@ -175,7 +195,7 @@
                     }
                 };
 
-            if ([KEY_DOWN, KEY_UP].indexOf(keyCode) === -1) {
+            if ([KEY_DOWN, KEY_UP, KEY_ENTER, KEY_NUMENTER, KEY_ESCAPE].indexOf(keyCode) === -1) {
                 if (term.length >= options['term-min-length']) {
                     if (!cache.hasOwnProperty(url + ':' + term)) {
                         $.get(
