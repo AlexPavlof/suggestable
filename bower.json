@@ -1,0 +1,23 @@
+{
+  "name": "jquery-suggestable",
+  "version": "0.0.1",
+  "homepage": "https://github.com/iborodikhin/jquery-suggestable",
+  "authors": [
+    "Igor Borodikhin <iborodikhin@gmail.com>"
+  ],
+  "description": "Simple jQuery plugin implementing search suggests with local cache.",
+  "main": "suggestable.min.js",
+  "keywords": [
+    "jquery",
+    "suggestable",
+    "suggest"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
