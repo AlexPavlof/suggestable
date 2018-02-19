@@ -72,11 +72,11 @@
 
         // Handle mouse over and out on item
         $(document).on('mouseover', itemSelector, function (event) {
-            hoverIndex = $(event.target).data('suggest-index');
-            $(document).trigger('suggestable-item-select', [$(event.target)]);
+            hoverIndex = $(event.currentTarget).data('suggest-index');
+            $(document).trigger('suggestable-item-select', [$(event.currentTarget)]);
         }).on('mouseout', itemSelector, function (event) {
             hoverIndex = -1;
-            $(document).trigger('suggestable-item-unselect', [$(event.target)]);
+            $(document).trigger('suggestable-item-unselect', [$(event.currentTarget)]);
         }).on('mouseup', function (event) {
             // Hide all containers on click outside
             var $container = $('.' + options['container-class']);
@@ -99,7 +99,7 @@
         $(this).attr("autocomplete", "off").on('keydown', function (event) {
             var
                 keyCode    = (event.keyCode || event.which),
-                $self      = $(event.target),
+                $self      = $(event.currentTarget),
                 $container = getContainer($self),
                 $suggestion;
 
@@ -142,16 +142,16 @@
 
             // Handle click on item
             $(document).on('click', itemSelector, function (event) {
-                $self.val($(event.target).data('suggest-data'));
+                $self.val($(event.currentTarget).data('suggest-data'));
 
                 $(document).trigger('suggestable-hide', [$container])
-                    .trigger('suggestable-click', [$(event.target)]);
+                    .trigger('suggestable-click', [$(event.currentTarget)]);
             });
 
             return true;
         }).on('keyup', function (event) {
             var
-                $self      = $(event.target),
+                $self      = $(event.currentTarget),
                 keyCode    = (event.keyCode || event.which),
                 $container = getContainer($self),
                 url        = $self.data(options['data-url']),
