@@ -57,7 +57,7 @@
                     selector    = '#' + containerId,
                     $matches    = $(selector);
 
-                if ($matches.size() < 1) {
+                if ($matches.length < 1) {
                     return $('<ul/>', {
                         'class' : options['container-class'],
                         'id'    : containerId
@@ -71,17 +71,17 @@
             };
 
         // Handle mouse over and out on item
-        $(document).on('mouseover', itemSelector, function () {
-            hoverIndex = $(this).data('suggest-index');
-            $(document).trigger('suggestable-item-select', [$(this)]);
-        }).on('mouseout', itemSelector, function () {
+        $(document).on('mouseover', itemSelector, function (event) {
+            hoverIndex = $(event.currentTarget).data('suggest-index');
+            $(document).trigger('suggestable-item-select', [$(event.currentTarget)]);
+        }).on('mouseout', itemSelector, function (event) {
             hoverIndex = -1;
-            $(document).trigger('suggestable-item-unselect', [$(this)]);
-        }).on('mouseup', function (e) {
+            $(document).trigger('suggestable-item-unselect', [$(event.currentTarget)]);
+        }).on('mouseup', function (event) {
             // Hide all containers on click outside
             var $container = $('.' + options['container-class']);
 
-            if (!$container.is(e.target) && $container.has(e.target).size() === 0) {
+            if (!$container.is(event.target) && $container.has(event.target).length === 0) {
                 $(document).trigger('suggestable-hide', [$container]);
             }
         }).on('suggestable-hide', function (event, $container) {
@@ -99,40 +99,40 @@
         $(this).attr("autocomplete", "off").on('keydown', function (event) {
             var
                 keyCode    = (event.keyCode || event.which),
-                $self      = $(this),
+                $self      = $(event.currentTarget),
                 $container = getContainer($self),
                 $suggestion;
 
             // Handle ENTER key press on text field
             if ($container.is(':visible')) {
                 switch (keyCode) {
-                case (KEY_ENTER || KEY_NUMENTER):
-                    $container.find('[data-suggest-index=' + hoverIndex + ']').trigger('click');
-                    break;
+                    case (KEY_ENTER || KEY_NUMENTER):
+                        $container.find('[data-suggest-index=' + hoverIndex + ']').trigger('click');
+                        break;
 
-                case KEY_UP:
-                    if (hoverIndex === -1 || hoverIndex <= $(itemSelector, $container).first().data('suggest-index')) {
-                        hoverIndex = $(itemSelector, $container).last().data('suggest-index');
-                    } else {
-                        hoverIndex = $container.find('[data-suggest-index=' + (hoverIndex - 1) + ']').data('suggest-index');
-                    }
+                    case KEY_UP:
+                        if (hoverIndex === -1 || hoverIndex <= $(itemSelector, $container).first().data('suggest-index')) {
+                            hoverIndex = $(itemSelector, $container).last().data('suggest-index');
+                        } else {
+                            hoverIndex = $container.find('[data-suggest-index=' + (hoverIndex - 1) + ']').data('suggest-index');
+                        }
 
-                    $suggestion = $container.find('[data-suggest-index=' + hoverIndex + ']');
-                    $suggestion.trigger('mouseover');
-                    $self.val($suggestion.data('suggest-data'));
-                    break;
+                        $suggestion = $container.find('[data-suggest-index=' + hoverIndex + ']');
+                        $suggestion.trigger('mouseover');
+                        $self.val($suggestion.data('suggest-data'));
+                        break;
 
-                case KEY_DOWN:
-                    if (hoverIndex === -1 || hoverIndex >= $(itemSelector, $container).last().data('suggest-index')) {
-                        hoverIndex = $(itemSelector, $container).first().data('suggest-index');
-                    } else {
-                        hoverIndex = $container.find('[data-suggest-index=' + (hoverIndex + 1) + ']').data('suggest-index');
-                    }
+                    case KEY_DOWN:
+                        if (hoverIndex === -1 || hoverIndex >= $(itemSelector, $container).last().data('suggest-index')) {
+                            hoverIndex = $(itemSelector, $container).first().data('suggest-index');
+                        } else {
+                            hoverIndex = $container.find('[data-suggest-index=' + (hoverIndex + 1) + ']').data('suggest-index');
+                        }
 
-                    $suggestion = $container.find('[data-suggest-index=' + hoverIndex + ']');
-                    $suggestion.trigger('mouseover');
-                    $self.val($suggestion.data('suggest-data'));
-                    break;
+                        $suggestion = $container.find('[data-suggest-index=' + hoverIndex + ']');
+                        $suggestion.trigger('mouseover');
+                        $self.val($suggestion.data('suggest-data'));
+                        break;
                 }
 
                 if ([KEY_DOWN, KEY_UP, KEY_ENTER, KEY_NUMENTER].indexOf(keyCode) !== -1 && hoverIndex !== -1) {
@@ -141,17 +141,17 @@
             }
 
             // Handle click on item
-            $(document).on('click', itemSelector, function () {
-                $self.val($(this).data('suggest-data'));
+            $(document).on('click', itemSelector, function (event) {
+                $self.val($(event.currentTarget).data('suggest-data'));
 
                 $(document).trigger('suggestable-hide', [$container])
-                    .trigger('suggestable-click', [$(this)]);
+                    .trigger('suggestable-click', [$(event.currentTarget)]);
             });
 
             return true;
         }).on('keyup', function (event) {
             var
-                $self      = $(this),
+                $self      = $(event.currentTarget),
                 keyCode    = (event.keyCode || event.which),
                 $container = getContainer($self),
                 url        = $self.data(options['data-url']),
@@ -174,8 +174,8 @@
                             $item.append($('<span/>', {
                                 'class' : options['term-class']
                             }).text(term)).append($('<span/>', {
-                                'class' : options['suggest-class']
-                            }).text(items[i]['query'].substr(term.length)))
+                                    'class' : options['suggest-class']
+                                }).text(items[i]['query'].substr(term.length)))
                                 .attr('data-suggest-data', items[i].query)
                                 .attr('data-suggest-index', i)
                                 .attr('data-suggest-url', items[i]['suggest-url']);
