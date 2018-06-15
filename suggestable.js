@@ -155,7 +155,7 @@
                 keyCode    = (event.keyCode || event.which),
                 $container = getContainer($self),
                 url        = $self.data(options['data-url']),
-                term       = $self.val(),
+                term       = $self.val().trim(),
                 successCb  = function (items) {
                     var
                         i     = 0,
