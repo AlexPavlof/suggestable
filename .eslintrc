@@ -1,0 +1,29 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "airbnb",
+        "plugin:flowtype/recommended"
+    ],
+    "plugins": [
+        "flowtype",
+        "jest"
+    ],
+    "rules": {
+        "func-names": ["error", "never"],
+        "indent": ["error", 4],
+        "key-spacing": ["error", { "align": "value" }],
+        "no-multi-spaces": ["error", { "exceptions": { "VariableDeclarator": true, "ImportDeclaration": true } }],
+        "no-param-reassign": 0,
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error",
+        "no-new": 0,
+    },
+    "env": {
+        "jest/globals": true,
+        "jest": true,
+        "jquery": true,
+    }
+}
