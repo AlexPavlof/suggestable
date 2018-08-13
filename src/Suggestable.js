@@ -473,14 +473,14 @@ export default class Suggestable {
     handlerKeyDown(event: KeyboardEvent): void {
         const keyCode = (event.keyCode || event.which);
 
-        if ([KEY_DOWN, KEY_UP, KEY_ENTER, KEY_NUMENTER].includes(keyCode)) {
+        if ([KEY_DOWN, KEY_UP].includes(keyCode)) {
             event.preventDefault();
         }
 
         if (isVisible(this.containerElement)) {
             switch (keyCode) {
                 case (KEY_ENTER || KEY_NUMENTER):
-                    this.pressEnterKey();
+                    this.pressEnterKey(event);
                     break;
 
                 case KEY_UP:
@@ -499,8 +499,10 @@ export default class Suggestable {
 
     /**
      * "Enter" key press action.
+     *
+     * @param {KeyboardEvent} event
      */
-    pressEnterKey(): void {
+    pressEnterKey(event: KeyboardEvent): void {
         const items: NodeList<HTMLElement> = this.getItems();
 
         if (!items.length) {
@@ -512,6 +514,8 @@ export default class Suggestable {
         if (!suggestElement) {
             return;
         }
+
+        event.preventDefault();
 
         suggestElement.dispatchEvent(new Event('click'));
     }

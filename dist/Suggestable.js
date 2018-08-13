@@ -648,14 +648,14 @@ var Suggestable = function () {
         value: function handlerKeyDown(event) {
             var keyCode = event.keyCode || event.which;
 
-            if ([KEY_DOWN, KEY_UP, KEY_ENTER, KEY_NUMENTER].includes(keyCode)) {
+            if ([KEY_DOWN, KEY_UP].includes(keyCode)) {
                 event.preventDefault();
             }
 
             if (isVisible(this.containerElement)) {
                 switch (keyCode) {
                     case KEY_ENTER || KEY_NUMENTER:
-                        this.pressEnterKey();
+                        this.pressEnterKey(event);
                         break;
 
                     case KEY_UP:
@@ -674,11 +674,13 @@ var Suggestable = function () {
 
         /**
          * "Enter" key press action.
+         *
+         * @param {KeyboardEvent} event
          */
 
     }, {
         key: 'pressEnterKey',
-        value: function pressEnterKey() {
+        value: function pressEnterKey(event) {
             var items = this.getItems();
 
             if (!items.length) {
@@ -690,6 +692,8 @@ var Suggestable = function () {
             if (!suggestElement) {
                 return;
             }
+
+            event.preventDefault();
 
             suggestElement.dispatchEvent(new Event('click'));
         }
