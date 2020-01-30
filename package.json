@@ -1,8 +1,9 @@
 {
-  "name": "jquery-suggestable",
-  "version": "2.0.1",
+  "name": "@alexpavlov/jquery-suggestable",
+  "version": "2.1.0",
   "description": "Simple jQuery plugin implementing search suggests with local cache.",
   "main": "dist/Suggestable.js",
+  "module": "dist/Suggestable.esm.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kolesa-team/jquery-suggestable.git"
@@ -14,41 +15,40 @@
   ],
   "author": "Igor Borodikhin <iborodikhin@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kolesa-team/jquery-suggestable/issues"
-  },
-  "homepage": "https://github.com/kolesa-team/jquery-suggestable#readme",
   "scripts": {
-    "dev": "webpack --mode development ./src/Suggestable.js --output ./dist/Suggestable.js --module-bind js=babel-loader --output-library-target umd --optimize-minimize --devtool source-map",
-    "build": "webpack --mode production ./src/Suggestable.js --output ./dist/Suggestable.min.js --module-bind js=babel-loader --output-library-target umd --optimize-minimize",
-    "build-plugin": "webpack --mode production ./src/jquery.suggestable.js --module-bind js=babel-loader --output ./dist/jquery.suggestable.min.js --optimize-minimize"
+    "build": "rollup -cm",
+    "test": "jest && codecov"
   },
   "files": [
     "dist"
   ],
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.3",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-stage-0": "^6.24.1",
-    "codecov": "^3.0.2",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-flowtype": "^2.49.3",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-jest": "^21.17.0",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-function-bind": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/register": "^7.4.0",
+    "@babel/runtime": "^7.4.3",
+    "babel-core": "^7.0.0-0",
+    "babel-eslint": "^10.0.1",
+    "codecov": "^3.3.0",
+    "core-js": "3",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-flowtype": "^3.6.1",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest": "^22.4.1",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
-    "flow-bin": "^0.74.0",
-    "jest": "^23.1.0",
-    "path": "^0.12.7",
-    "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.12.0",
-    "webpack-cli": "^3.0.8"
+    "flow-bin": "^0.117.0",
+    "jest": "^25.1.0",
+    "rollup": "^1.30.1",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-eslint": "^5.1.0",
+    "rollup-plugin-flow": "^1.1.1",
+    "rollup-plugin-uglify": "^6.0.2"
   }
 }
