@@ -9,6 +9,7 @@
         "jest"
     ],
     "rules": {
+        "max-len": ["error", 120, 4],
         "func-names": ["error", "never"],
         "indent": ["error", 4],
         "key-spacing": ["error", { "align": "value" }],
@@ -19,11 +20,12 @@
         "jest/no-identical-title": "error",
         "jest/prefer-to-have-length": "warn",
         "jest/valid-expect": "error",
-        "no-new": 0,
+        "no-new": 0
     },
     "env": {
+        "browser": true,
         "jest/globals": true,
         "jest": true,
-        "jquery": true,
+        "jquery": true
     }
 }
