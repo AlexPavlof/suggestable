@@ -1,12 +1,12 @@
 {
   "name": "jquery-suggestable",
-  "version": "0.1.2",
+  "version": "2.0.0",
   "homepage": "https://github.com/kolesa-team/jquery-suggestable",
   "authors": [
     "Igor Borodikhin <iborodikhin@gmail.com>"
   ],
   "description": "Simple jQuery plugin implementing search suggests with local cache.",
-  "main": "suggestable.min.js",
+  "main": "dist/Suggestable.js",
   "keywords": [
     "jquery",
     "suggestable",
