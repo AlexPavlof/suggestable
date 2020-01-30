@@ -53,28 +53,24 @@ export const outerHeight = (element: HTMLElement): number => {
     return height;
 };
 
-export const isVisible = (element: HTMLElement): boolean =>
-    !!(element.offsetWidth || element.offsetHeight || element.getClientRects().length);
+export const isVisible = (element: HTMLElement): boolean => (
+    !!(element.offsetWidth || element.offsetHeight || element.getClientRects().length)
+);
+
+export const defaults: Object = {
+    'data-url':          'suggestableUrl',
+    'container-class':   'suggestable-container',
+    'item-class':        'suggestable-item',
+    'item-active-class': 'suggestable-item-active',
+    'term-class':        'suggestable-term',
+    'suggest-class':     'suggestable-suggest',
+    'delimiter-text':    ' — ',
+    'delimiter-class':   'suggestable-delimiter',
+    'text-class':        'suggestable-text',
+    'term-min-length':   3,
+};
 
 export default class Suggestable {
-    /**
-     * Default options.
-     *
-     * @type {Object}
-     */
-    options: Object = {
-        'data-url':          'suggestableUrl',
-        'container-class':   'suggestable-container',
-        'item-class':        'suggestable-item',
-        'item-active-class': 'suggestable-item-active',
-        'term-class':        'suggestable-term',
-        'suggest-class':     'suggestable-suggest',
-        'delimiter-text':    ' — ',
-        'delimiter-class':   'suggestable-delimiter',
-        'text-class':        'suggestable-text',
-        'term-min-length':   3,
-    };
-
     /**
      * Hovered element index.
      *
@@ -131,7 +127,7 @@ export default class Suggestable {
      * @param {Object} options
      */
     constructor(element: HTMLInputElement, options: Object = {}): void {
-        Object.assign(this.options, options);
+        this.options = Object.assign({}, defaults, options);
 
         this.inputElement = element;
         this.containerElement = this.getContainer(this.inputElement);
@@ -294,7 +290,7 @@ export default class Suggestable {
         itemElement.dataset.suggestIndex = index.toString();
         itemElement.dataset.suggestUrl = item['suggest-url'];
 
-        if (item['suggest-text'] !== '') {
+        if (item['suggest-text'].trim() !== '') {
             const delimiterElement: HTMLElement     = document.createElement('span');
             const delimiterTextElement: HTMLElement = document.createElement('span');
 
@@ -477,23 +473,25 @@ export default class Suggestable {
             event.preventDefault();
         }
 
-        if (isVisible(this.containerElement)) {
-            switch (keyCode) {
-                case (KEY_ENTER || KEY_NUMENTER):
-                    this.pressEnterKey(event);
-                    break;
+        if (!isVisible(this.containerElement)) {
+            return;
+        }
 
-                case KEY_UP:
-                    this.pressArrowUpKey();
-                    break;
+        switch (keyCode) {
+        case (KEY_ENTER || KEY_NUMENTER):
+            this.pressEnterKey(event);
+            break;
 
-                case KEY_DOWN:
-                    this.pressArrowDownKey();
-                    break;
+        case KEY_UP:
+            this.pressArrowUpKey();
+            break;
 
-                default:
-                    break;
-            }
+        case KEY_DOWN:
+            this.pressArrowDownKey();
+            break;
+
+        default:
+            break;
         }
     }
 
