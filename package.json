@@ -1,6 +1,6 @@
 {
   "name": "@alexpavlov/jquery-suggestable",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Simple jQuery plugin implementing search suggests with local cache.",
   "main": "dist/Suggestable.js",
   "module": "dist/Suggestable.esm.js",

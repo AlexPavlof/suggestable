@@ -271,20 +271,16 @@ export default class Suggestable {
      * @param {number} index
      */
     createSuggestableItem(item: Object, index: number): void {
+        const regex: RegExp               = new RegExp(`(${this.term})`);
         const itemElement: HTMLElement    = document.createElement('li');
-        const termElement: HTMLElement    = document.createElement('span');
         const suggestElement: HTMLElement = document.createElement('span');
 
         itemElement.style.display = 'none';
         itemElement.classList.add(this.options['item-class']);
 
-        termElement.classList.add(this.options['term-class']);
-        termElement.textContent = this.term;
-
         suggestElement.classList.add(this.options['suggest-class']);
-        suggestElement.textContent = item.query.substr(this.term.length);
+        suggestElement.textContent = item.query.replace(regex, `<span class="${this.options['term-class']}">$1</span>`);
 
-        itemElement.appendChild(termElement);
         itemElement.appendChild(suggestElement);
         itemElement.dataset.suggestData = item.query;
         itemElement.dataset.suggestIndex = index.toString();
